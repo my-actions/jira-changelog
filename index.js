@@ -14,6 +14,7 @@ function readConfigFile(configPath) {
   let localConf = {};
   try {
     // Check if file exists
+    console.log(process.cwd());
     console.log(configPath);
     fs.accessSync(configPath);
     return require(configPath);
