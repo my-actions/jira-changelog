@@ -3,7 +3,7 @@ description: 'Generates a changelog message by looking at Jira issue keys ([DEV-
 inputs:
     config:
         description: 'Configuration file for generating the changelog'
-        default: '.github/changelog.js'
+        default: '/.github/changelog.js'
         required: true
     release:
         description: 'The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.'

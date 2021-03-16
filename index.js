@@ -18,7 +18,7 @@ function readConfigFile(configPath) {
     fs.accessSync(configPath);
     return require(configPath);
   } catch(e) {
-    const message = "Please define the configuration file (i.e .github/changelog.js)";
+    const message = "Please define the configuration file (i.e /.github/changelog.js)";
     core.setFailed(message);
   }
 }
