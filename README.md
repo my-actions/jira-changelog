@@ -44,13 +44,13 @@ jobs:
         run: echo ::set-env name=VERSION::1.1.1
       # To use this repository's private action, you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v1 # Use v1 or v2 with fetch-depth: 0
       - name: Changelog
         id: changelog
         uses: my-actions/jira-changelog@v2
         with:
           config: '.github/changelog.config.js' # Required
-          release: '4.5.2' # The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.
+          release: '4.5.2' # The release name. This will set the `fixVersions` of all issues found in Jira.
           from: 'develop'
           to: 'master'
           debug: 'false'

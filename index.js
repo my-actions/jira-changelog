@@ -15,7 +15,7 @@ function readConfigFile(configPath) {
   try {
     // Check if file exists
     const absolutePath = process.cwd() + '/' + configPath
-    console.log(absolutePath);
+    console.log(`Loading configuration from  ${absolutePath}`);
     fs.accessSync(absolutePath);
     return require(absolutePath);
   } catch(e) {
