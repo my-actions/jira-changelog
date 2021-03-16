@@ -1,14 +1,14 @@
 {
-  "name": "github-jira-changelog-action",
-  "version": "1.1.1",
-  "description": "Generates a changelog message by looking at Jira issue keys ([DEV-123]) in commit messages.",
+  "name": "@my-actions/jira-changelog",
+  "version": "2.0.0",
+  "description": "Generates a changelog by looking at Jira issue keys in commit messages.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/connorsmallman/github-jira-changelog-action.git"
+    "url": "git+https://github.com/my-actions/jira-changelog.git"
   },
   "keywords": [],
   "author": "",
@@ -20,11 +20,6 @@
   "dependencies": {
     "@actions/core": "^1.1.0",
     "@actions/github": "^1.1.0",
-    "ejs": "^3.0.1",
-    "haikunator": "^2.1.2",
-    "html-entities": "^1.2.1",
-    "jira-changelog": "^1.5.0",
-    "lodash": "^4.17.15",
-    "regexp-from-string": "^0.1.0"
+    "jira-changelog": "^1.6.3"
   }
 }
