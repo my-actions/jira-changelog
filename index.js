@@ -14,7 +14,7 @@ function readConfigFile(configPath) {
   let localConf = {};
   try {
     // Check if file exists
-    fs.readdirSync(process.cwd()).forEach(file => {
+    fs.readdirSync(process.cwd() + '/.github').forEach(file => {
       console.log(file);
     });
     console.log(configPath);
