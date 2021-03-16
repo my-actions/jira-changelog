@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const fs = require('fs');
 const {AllHtmlEntities} = require("html-entities");
 const {Jira, SourceControl } = require('jira-changelog');
-const {generateTemplateData, renderTemplate } = require('jira-changelog/template.js');
+const {generateTemplateData, renderTemplate } = require('template.js');
 
 /**
  * Reads the config file, merges it with the default values and returns the object.
@@ -17,7 +17,7 @@ function readConfigFile(configPath) {
     fs.accessSync(configPath);
     return localConf = require(configPath);
   } catch(e) {
-    console.error("Please define the configuration file (i.e .github/changelog.js")
+    console.error("Please define the configuration file (i.e .github/changelog.js)")
   }
 }
 
