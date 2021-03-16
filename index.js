@@ -14,10 +14,12 @@ function readConfigFile(configPath) {
   let localConf = {};
   try {
     // Check if file exists
+    console.log(configPath);
     fs.accessSync(configPath);
     return require(configPath);
   } catch(e) {
-    console.error("Please define the configuration file (i.e .github/changelog.js)")
+    const message = "Please define the configuration file (i.e .github/changelog.js)";
+    core.setFailed(message);
   }
 }
 
