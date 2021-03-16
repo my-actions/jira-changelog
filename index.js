@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const fs = require('fs');
 const {AllHtmlEntities} = require("html-entities");
 const {Jira, SourceControl } = require('jira-changelog');
-const {generateTemplateData, renderTemplate } = require('template.js');
+const {generateTemplateData, renderTemplate } = require('./template.js');
 
 /**
  * Reads the config file, merges it with the default values and returns the object.
@@ -71,6 +71,7 @@ async function main() {
     // Output to console
     if (debug) {
       console.log('Changelog message entry:');
+      const entities = new AllHtmlEntities();
       console.log(entities.decode(changelogMessage));
     }
     core.setOutput('changelog', changelogMessage);
