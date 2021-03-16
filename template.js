@@ -1,7 +1,6 @@
 // THIS IS A COPY OF THAT FILE: https://github.com/jgillick/jira-changelog/blob/master/src/template.js
-import ejs from 'ejs';
-import _ from 'lodash';
-
+const ejs = require('ejs');
+const _ = require('lodash');
 
 /**
  * Filter revert commits out of a commit log list, if the original commit is present.
