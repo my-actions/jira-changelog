@@ -1,68 +1,36 @@
-# Jira Changelog Action
+# Jira Changelog
 
-Generates a changelog message by looking at Jira issue keys, surrounded by square brackets (i.e. [DEV-123]), in the git commit logs. When it finds one, it associates that Jira issue ticket with that commit and adds it to the output.
+GitHub action generating a changelog looking at Jira issue keys (i.e. [DEV-123]), in the git commit logs. 
+
+That action is wrapping the library [jira-changelog](https://github.com/jgillick/jira-changelog) to generate the changelog. 
+
+Please check that library to understand what you can do with that action.
 
 ## Inputs
 
-### `jira_host`
+| Input field       | Description                                                                                   | Required         | Default  |
+| ----------------- |---------------------------------------------------------------------------------------------- | ---------------- |----------|
+| `config`          | The configuration file to generate the changelog (see below)                                  | `true` | `.github/changelog.js` |
+| `from`            | Starting git reference to get range of commits                                                |   `true` | `develop` |
+| `to`              | Ending git reference to get range of commits                                                  |   `true` | `master` |
+| `release`         | The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.    |  `false` | auto-generated  |
+| `debug`           | Display debug messages (commits found, jitra issue found)                                     | `false` | `true` | 
 
-**Required** Root host of your JIRA installation without protocol. // (i.e "yourapp.atlassian.net")
-
-### `jira_email`
-
-**Required** Email address of the user to login with
-
-### `jira_token`
-
-**Required** Auth token of the user to login with
-
-### `jira_base_url`
-
-Jira base web URL for changelog message entries
-
-### `jira_ticket_id_pattern`
-
-Regex used to match the issue ticket key
-*Note: Use capture group one to isolate the key text within surrounding characters (if needed).*
-
-### `source_control_range_from`
-
-Starting branch to get range of commits
-
-### `source_control_range_to`
-
-Ending branch to get range of commits
 
 ## Outputs
 
-### `changelog_message`
+| Input field   | Description   |
+| ------------- |:-------------:| 
+| `changelog`   | The changelog generated using the configuration (see below) |
 
-Generated changelog entry
+# Configuration
 
-```
-Jira Tickets
----------------------
+That GitHub action expect a configuration file located at `.github/changelog.js` to run.
 
-  * <Bug> - Unable to access date widget
-    [DEV-1234] https://yoursite.atlassian.net/browse/DEV-1234
+Please refer to the [jira-changelog](https://github.com/jgillick/jira-changelog) library for an [example](https://github.com/jgillick/jira-changelog/blob/master/changelog.config.js).
 
-  * <Story> - Support left-handed keyboards
-    [DEV-5678] https://yoursite.atlassian.net/browse/DEV-5678
 
-  * <Story> - Search by location
-    [DEV-8901] https://yoursite.atlassian.net/browse/DEV-8901
-
-Other Commits
----------------------
-
-  * <cd6f512> - Fix typo in welcome message
-
-Pending Approval
----------------------
- ~ None. Yay! ~
-```
-
-## Example usage
+# Example usage
 
 ```yaml
 on: [push]
@@ -79,14 +47,13 @@ jobs:
         uses: actions/checkout@v1
       - name: Changelog
         id: changelog
-        uses: actions/jira-changelog@v1
+        uses: my-actions/jira-changelog@v2
         with:
-          jira_host: 'myapp.atlassian.net'
-          jira_email: 'jirauser@myapp.com'
-          jira_token: 'qWoJBdlEp6pJy15fc9tGpsOOR2L5i35v'
-          jira_base_url: 'https://yoursite.atlassian.net'
-          source_control_range_from: 'develop'
-          source_control_range_to: 'master'
+          config: '.github/changelog.config.js' # Required
+          release: '4.5.2' # The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.
+          from: 'develop'
+          to: 'master'
+          debug: 'false'
       - name: Get the changelog message
-        run: echo "${{ steps.changelog.outputs.changelog_message }}"
+        run: echo "${{ steps.changelog.outputs.changelog }}"
 ```

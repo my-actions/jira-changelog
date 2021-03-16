@@ -1,37 +1,28 @@
 name: 'Jira Changelog'
 description: 'Generates a changelog message by looking at Jira issue keys ([DEV-123]) in commit messages.'
 inputs:
-    jira_host:
-        description: 'Root host of your JIRA installation without protocol. // (i.e "yourapp.atlassian.net")'
-        default: 'https://atlassian.net'
+    config:
+        description: 'Configuration file for generating the changelog'
+        default: '.github/changelog.js'
         required: true
-    jira_email:
-        description: 'Email address of the user to login with'
-        default: 'e@email.com'
+    release:
+        description: 'The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.'
+        required: false
+    from:
+        description: 'Starting git ref to get range of commits'
+        default: "develop"
         required: true
-    jira_token:
-        description: 'Auth token of the user to login with'
-        default: 'knmD98cbfsd£jnfjnH?KHKH'
+    to:
+        description: 'Ending git ref to get range of commits'
+        default: "master"
         required: true
-    jira_base_url:
-        description: 'Jira base web URL for changelog message entries'
-        default: 'https://atlassian.net'
-        required: false
-    jira_ticket_id_pattern:
-        description: 'Regex used to match the issue ticket key'
-        default: /\[([A-Z]+\-[0-9]+)\]/i
-        required: false
-    source_control_range_from:
-        description: 'Starting branch to get range of commits'
-        default: 'develop'
-        required: false
-    source_control_range_to:
-        description: 'Ending branch to get range of commits'
-        default: 'master'
-        required: false
+    debug:
+        description: 'Print debug messages'
+        default: 'true'
+        required: true
 outputs:
-    changelog_message:
-        description: 'Generated changelog entry'
+    changelog:
+        description: 'Generated changelog'
 runs:
     using: 'node12'
     main: 'index.js'
