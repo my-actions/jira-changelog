@@ -15,7 +15,7 @@ function readConfigFile(configPath) {
   try {
     // Check if file exists
     fs.accessSync(configPath);
-    return localConf = require(configPath);
+    return require(configPath);
   } catch(e) {
     console.error("Please define the configuration file (i.e .github/changelog.js)")
   }

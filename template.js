@@ -31,7 +31,7 @@ const _ = require('lodash');
  * @param {Array} logs - List of commit logs
  * @return {Object} containing: reverted, current
  */
-export function filterRevertedCommits(logs) {
+function filterRevertedCommits(logs) {
   // Convenient commit lookup
   const commitHash = {};
   logs.forEach(l => commitHash[l.revision] = l);
@@ -62,7 +62,7 @@ export function filterRevertedCommits(logs) {
  * @param {Array} tickets - Array of jira ticket objects, each with a commit list
  * @return {Array}
  */
-export function decorateTicketReverts(tickets) {
+function decorateTicketReverts(tickets) {
   tickets.forEach((ticket) => {
     if (!ticket.commits || !ticket.commits.length) {
       ticket.reverted = null;
@@ -81,7 +81,7 @@ export function decorateTicketReverts(tickets) {
  * @param {Array} tickets
  * @return {Object}
  */
-export function getTicketReporters(tickets) {
+function getTicketReporters(tickets) {
   const reporters = {};
 
   tickets.forEach((ticket) => {
@@ -109,7 +109,7 @@ export function getTicketReporters(tickets) {
  * @param {Array} tickets - List of Jira tickets
  * @param {Array}
  */
-export function groupTicketsByStatus(config, tickets) {
+function groupTicketsByStatus(config, tickets) {
   let { approvalStatus } = config.jira;
   if (!approvalStatus) {
     return {
@@ -163,7 +163,7 @@ export function groupTicketsByStatus(config, tickets) {
  *
  * @return {Promise} Resolves to an object with filtered commit/ticket data
  */
-export function transformCommitLogs(config, logs) {
+function transformCommitLogs(config, logs) {
   // Filter reverts
   const reducedLogs = filterRevertedCommits(logs);
 
@@ -212,7 +212,7 @@ export function transformCommitLogs(config, logs) {
  *
  * @return {String}
  */
-export async function generateTemplateData(config, changelog, releaseVersions) {
+async function generateTemplateData(config, changelog, releaseVersions) {
   let data = await transformCommitLogs(config, changelog);
   if (typeof config.transformData == 'function') {
     data = await Promise.resolve(config.transformData(data));
@@ -236,6 +236,11 @@ export async function generateTemplateData(config, changelog, releaseVersions) {
  *
  * @return {String}
  */
-export function renderTemplate(config, data) {
+function renderTemplate(config, data) {
   return ejs.render(config.template, data);
+}
+
+module.exports = {
+  generateTemplateData,
+  renderTemplate
 }
