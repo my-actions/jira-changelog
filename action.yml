@@ -5,6 +5,12 @@ inputs:
         description: 'Configuration file for generating the changelog'
         default: '.github/changelog.js'
         required: true
+    jira_email:
+        description: 'Email address of the user to login with'
+        required: true
+    jira_token:
+        description: 'Auth token of the user to login with'
+        required: true
     release:
         description: 'The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.'
         required: false
@@ -15,10 +21,6 @@ inputs:
     to:
         description: 'Ending git ref to get range of commits'
         default: "master"
-        required: true
-    debug:
-        description: 'Print debug messages'
-        default: 'true'
         required: true
 outputs:
     changelog:

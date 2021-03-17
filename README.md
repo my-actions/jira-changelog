@@ -14,7 +14,8 @@ Please check that library to understand what you can do with that action.
 | `from`            | Starting git reference to get range of commits                                                |   `true` | `develop` |
 | `to`              | Ending git reference to get range of commits                                                  |   `true` | `master` |
 | `release`         | The release name (ie: 3.0.4). This will set the `fixVersions` of all issues found in Jira.    |  `false` | auto-generated  |
-| `debug`           | Display debug messages (commits found, jitra issue found)                                     | `false` | `true` | 
+| `jira_email`      | Email address of the user to login with                                                       | `true` |  | 
+| `jira_token`      | Auth token of the user to login with                                                          | `true` |  | 
 
 
 ## Outputs
@@ -36,13 +37,12 @@ Please refer to the [jira-changelog](https://github.com/jgillick/jira-changelog)
 on: [push]
 
 jobs:
-  hello_world_job:
+  changelog:
     runs-on: ubuntu-latest
     name: Changelog
     steps:
       - name: Set Version
         run: echo ::set-env name=VERSION::1.1.1
-      # To use this repository's private action, you must check out the repository
       - name: Checkout
         uses: actions/checkout@v1 # Use v1 or v2 with fetch-depth: 0
       - name: Changelog

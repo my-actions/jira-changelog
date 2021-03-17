@@ -37,6 +37,15 @@ async function main() {
         to: core.getInput('to')
       }
     }
+    // Setup Jira
+    const jiraConfig = {
+      api: {
+        email: core.getInput('jira_email'),
+        token: core.getInput('jira_token'),
+      }
+    }
+    config.jira = {...config.jira, jiraConfig}
+
     // Release
     const release = core.getInput('release')
     if (!release && typeof config.jira.generateReleaseVersionName !== 'function') {
@@ -45,27 +54,22 @@ async function main() {
     }
 
     // Get debug opts
-    const debug = core.getInput('debug')
     const source = new SourceControl(config);
     const jira = new Jira(config);
 
     const range = config.sourceControl.defaultRange;
     console.log(`Getting range ${range.from}...${range.to} commit messages`);
     const commitLogs = await source.getCommitLogs('./', range);
-    if (debug) {
-      console.log('Found following commit logs:');
-      console.log(commitLogs);
-    }
+    console.log('Found following commit logs:');
+    console.log(commitLogs);
 
     console.log('Generating release version');
     console.log(`Release: ${release}`);
 
     console.log('Generating changelog from commit messages');
     const changelog = await jira.generate(commitLogs, release);
-    if (debug) {
-      console.log('Changelog entry:');
-      console.log(changelog);
-    }
+    console.log('Changelog entry:');
+    console.log(changelog);
 
     console.log('Generating changelog');
     // Render template
@@ -73,11 +77,9 @@ async function main() {
     const changelogMessage = renderTemplate(config, tmplData);
 
     // Output to console
-    if (debug) {
-      console.log('Changelog message entry:');
-      const entities = new AllHtmlEntities();
-      console.log(entities.decode(changelogMessage));
-    }
+    console.log('Changelog message entry:');
+    const entities = new AllHtmlEntities();
+    console.log(entities.decode(changelogMessage));
     core.setOutput('changelog', changelogMessage);
   } catch (error) {
     core.setFailed(error.message);
