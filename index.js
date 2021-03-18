@@ -38,13 +38,10 @@ async function main() {
       }
     }
     // Setup Jira
-    const jiraConfig = {
-      api: {
+    config.jira.api = {
         email: core.getInput('jira_email'),
         token: core.getInput('jira_token'),
-      }
     }
-    config.jira = {...config.jira, jiraConfig}
 
     // Release
     const release = core.getInput('release')
