@@ -39,6 +39,7 @@ async function main() {
     }
     // Setup Jira
     config.jira.api = {
+        ...config.jira.api,
         email: core.getInput('jira_email'),
         token: core.getInput('jira_token'),
     }
